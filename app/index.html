@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" ng-app="app">
+<head>
+<meta charset="utf-8"/>
+<title>{{app_title||'首页'}}</title>
+<meta name="format-detection" content="telphone=no,email=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=0"/>
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css" href="/app/res/app/iconfont/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="/app/res/app/weui.css"/>
+<link rel="stylesheet" type="text/css" href="/app/res/app/css.css"/>
+<script src="/app/res/angular/angular/angular.min.js"></script>
+<script src="/app/res/angular/angular/angular-animate.min.js"></script>
+<script src="/app/res/angular/angular/angular-resource.min.js"></script>
+<script src="/app/res/angular/angular/angular-route.min.js"></script>
+<script src="/app/res/angular/angular/angular-sanitize.min.js"></script>
+<script src="/app/res/angular/angular/angular-touch.min.js"></script>
+</head>
+<body>
+<div class="warp" ng-view></div>
+</body>
+<script src="/app/res/jquery/jquery.min.js"></script>
+<script src="/app/res/app/controllers.js"></script>
+<script src="/app/res/app/filters.js"></script>
+<script src="/app/res/app/directives.js"></script>
+<script src="/app/res/app/services.js"></script>
+<script src="/app/res/app/app.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+wx.config({ 
+     debug:true,
+     appId: appId, // 必填，公众号的唯一标识 
+     timestamp: timestamp, // 必填，生成签名的时间戳 
+     nonceStr: nonceStr, // 必填，生成签名的随机串 
+     signature: signature, // 必填，签名，见附录1 
+     jsApiList: [
+         'onMenuShareTimeline',
+         'onMenuShareAppMessage'
+    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+});
+</script>
+</html>

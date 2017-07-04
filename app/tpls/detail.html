@@ -1,0 +1,54 @@
+<div class="detail_banner banner">
+  <ul style="width:{{count}}%;" ontouchstart="touch.touchStart(event)" ontouchmove="touch.touchMove(event);" ontouchend="touch.touchEnd();" id="slide">
+    <li style="width:{{per}}%" ng-repeat='i in banners'><a><img ng-src="{{__PUBLIC__}}/{{i}}" /></a></li>
+  </ul>
+  <p id="slideBar" class="bar">
+     <i ng-repeat="i in banners"></i>
+  </p>
+</div>
+
+<div class="style_options">
+  <div class="options" ng-repeat="i in sku track by $index" ng-init="index=$index">
+    <label>{{i.name}}</label>
+    <a ng-repeat="item in i.items track by $index" class="{{item.class}}" ng-click="set_options(index,$index)">{{item.name}}</a>
+  </div>
+</div>
+
+<div class="disc">
+  <div class="title_price">
+    <h3>{{d.title}}</h3>
+    <span class="prize" ng-if="!target.price">￥<b>{{d.price}}</b></span>
+    <span class="prize" ng-if="target.price">￥<b>{{target.price}}</b></span>
+    <del ng-if="target.count">库存:{{target.count}}</del>
+  </div>
+  <div class="summary">{{d.summary}}</div>
+</div>
+<div class="gallery" ng-bind-html="d.content"></div>
+
+<div class="comment">
+  <h2>商品评论</h2>
+  <ul class="comments">
+    <li ng-repeat="i in comments">
+      <h3><img ng-src="{{i.headimgurl}}"><span>{{i.nickname}}</span></h3>
+      <p>{{i.content}}</p>
+      <time>{{i.time*1000|date:"yyyy-MM-dd HH:mm:ss"}}</time>
+    </li>
+  </ul>
+  <div class="pages">
+    <a ng-click="prev()">下一页</a>
+    <span>{{page+1}}/{{total}}</span>
+    <a ng-click="next()">下一页</a>
+  </div>
+  <div class="btn3"  ng-hide="commont_opend" ng-click="open_comment()">我要评论</div>
+  <div class="textarea" ng-show="commont_opend"><textarea ng-model='comment_content'></textarea></div>
+  <div class="btn5" ng-show="commont_opend" ng-click="comment_submit()">提交评论</div>
+</div>
+
+<div class="addcar" ng-click="addcar()">加入<br/>购物车</div>
+
+<mynav car_count='{{car.car_count}}'></mynav>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

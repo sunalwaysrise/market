@@ -1,0 +1,196 @@
+<h1 class="page-title">{{title}}</h1>
+<ol class="breadcrumb ng-scope">
+    <li>首页</li>
+    <li><a ui-sref="app.product">全部产品</a></li>
+    <li ng-if="title=='产品详情'"><a ui-sref="app.product_list({id:categoty_id})">{{cid_txt}}</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+<section>
+  <ul class="nav nav-tabs">
+    <li class="uib-tab nav-item" ng-click="set_step0()" ng-class="{'active':step0}"><a class="nav-link" >产品基本信息</a></li>
+    <li class="uib-tab nav-item" ng-click="set_step1()" ng-class="{'active':step1,'disabled':disabled}"><a class="nav-link" >产品属性</a></li>
+    <li class="uib-tab nav-item" ng-click="set_step2()" ng-class="{'active':step2,'disabled':disabled}"><a class="nav-link" >库存及价格</a></li>
+    <li class="uib-tab nav-item" ng-click="set_step3()" ng-class="{'active':step3,'disabled':disabled}"><a class="nav-link" >完成发布</a></li>
+  </ul>
+  <div class="widget" ng-show="step0">
+    <form class="form-horizontal" role="form">
+      <fieldset>
+          <div class="form-group">
+              <label for="normal-title" class="col-sm-2 control-label">名称</label>
+              <div class="col-sm-7">
+                  <input type="text" id="normal-title" class="form-control" ng-model="d.title">
+              </div>
+          </div>
+          <div class="form-group">
+              <label  class="col-sm-2 control-label">首页显示价格</label>
+              <div class="col-sm-7">
+                  <input type="text" class="form-control" ng-model="d.price">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-2 control-label" for="normal-category">类别</label>
+              <div class="col-sm-7">
+                <div class="form-control l_select">
+                    <select id="normal-category" class="l_select2" ng-model="d.cid">
+                        <option ng-repeat="i in category" value="{{i.tid}}">{{i.name}}</option>
+                    </select>
+                </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="col-sm-2 control-label" for="default-summary">简介</label>
+              <div class="col-sm-6">
+                <textarea rows="4" class="form-control" id="default-summary" ng-model="d.summary"></textarea>
+              </div>
+          </div>
+
+          <!-- <div class="form-group">
+              <label class="col-sm-2 control-label" for="normal-category">是否上线</label>
+              <div class="col-sm-2 ">
+                <div class="form-control l_select">
+                    <select id="normal-category" class="l_select2" ng-model="d.status">
+                        <option  value="1">是</option>
+                        <option  value="0">否</option>
+                    </select>
+                </div>
+              </div>
+          </div> -->
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">重选图片</label>
+            <div class="col-md-5">
+              <input class="form-control" type="file" id="file1" name="upload" multiple />
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-default" ng-click="btn_upload()">上传图片</button>
+              <button type="button" class="btn btn-default" ng-click="btn_clean()">删除全部</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <div ng-repeat="file in files" class="upload_progress">
+                <div class="row">
+                    <div class="col-md-8">{{file.name}}</div>
+                    <div class="col-md-4 text-align-right">
+                        <span>{{file.humanSize}}</span>
+                        <a ng-click="btn_remove(file)" >删除</a>
+                    </div>
+                </div>
+                <progress value="{{file.loaded}}" max="{{file.size}}"></progress>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">移动排序</label>
+            <div class="col-sm-10">
+              <div class="well images_sort_box" ui-sortable >
+                <div class="images_sort" ng-repeat="i in images">
+                  <img ng-src="{{__PUBLIC__}}{{i}}" />
+                  <span ng-click="remove(i)" class="glyphicon glyphicon-remove"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+              <div class="ueditor" ready="ready"  ng-model="d.content"></div>
+            </div>
+          </div>
+      </fieldset>
+      <div class="form-actions">
+        <div class="row">
+          <div class="col-sm-offset-4 col-sm-7">
+            <button ng-click="save()" type="submit" class="btn btn-primary">发布</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="widget" ng-show="step1">
+
+      <fieldset>
+        <div class="widget sku_step1" ng-repeat="i in sku track by $index" ng-init="index=$index">
+
+          <header class="nav-tabs">
+            <div class="input_sku_name">
+              <input class="form-control input-no-border dis width-200" ng-trim="true" type="text" ng-model="i.name" />
+            </div>
+            <div class="widget-controls">
+              <a class="glyphicon glyphicon-remove" ng-click="remove_sku_name($index)"></a>
+            </div>
+          </header>
+
+          <div class="wiget-body sku_value_box">
+            <div class="row">
+              <div class="col-sm-3" ng-repeat="item in i.items track by $index">
+                <p class="item_name">
+                  <input class="form-control " ng-trim="true" type="text" ng-model="item.name" />
+                  <span class="glyphicon glyphicon-remove" ng-click="remove_sku_value(index,$index)"></span>
+                </p>
+                <!-- <div class="item_image"><img /></div> -->
+              </div>
+              <a class="add" ng-click="add_sku_value($index)">添加属性值</a>
+            </div>
+          </div>
+
+        </div>
+        <a ng-click="add_sku_name()">添加属性</a>
+
+      </fieldset>
+      <div class="form-actions">
+          <div class="row">
+              <div class="col-sm-offset-4 col-sm-7">
+                  <button ng-click="save2()" type="submit" class="btn btn-primary">保存</button>
+              </div>
+          </div>
+      </div>
+    
+  </div>
+  <div class="widget" ng-show="step2">
+    <fieldset>
+      <table class="table table-bordered table-lg mt-lg mb-0">
+        <thead>
+          <tr>
+            <td ng-repeat='i in sku'>{{i.name}}</td>
+            <td>库存</td>
+            <td>价格</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="i in price track by $index">
+            <td ng-repeat="item in i">{{item.name}}</td>
+            <td><input type="number" step="1" min="0" ng-model="price_items[$index].count" class="form-control"></td>
+            <td><input type="number" step="1" min="0" ng-model="price_items[$index].price" class="form-control"></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <div class="form-actions">
+      <div class="row">
+        <div class="col-sm-offset-4 col-sm-7">
+          <button ng-click="save3()" type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="widget" ng-show="step3">
+    <fieldset>
+      <h3 class="text-align-center">点击发布,上架产品</h3>
+    </fieldset>
+    <div class="form-actions">
+      <div class="row">
+        <div class="col-sm-offset-4 col-sm-7">
+          <button ng-click="save4()" type="submit" class="btn btn-primary">发布</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

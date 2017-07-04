@@ -1,0 +1,46 @@
+<h1 class="page-title">
+    系统管理员
+    <button ui-sref="app.manage_detail({id:0})" class="btn btn-default btn-sm">添加管理员</button>
+</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>系统管理员</h5>
+            </header>
+            <div class="widget-body no-padding">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>姓名</th>
+                            <th>权限</th>
+                            <th>开通</th>
+                            <th class="width-200">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="i in items">
+                            <td>{{i.username}}</td>
+                            <td>{{i.realname}}</td>
+                            <td>{{i.rbac|to_rbac}}</td>
+                            <td>{{i.status|to_status}}</td>
+                            <td>
+                                <a class="btn btn-default btn-sm mb-xs" ui-sref="app.manage_detail({id:i.id})">查看</a>
+                                <a class="btn btn-default btn-sm mb-xs" ng-click="locked(i.id)">锁定</a>
+                                <a class="btn btn-default btn-sm mb-xs" ng-click="deleted(i.id)">刪除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

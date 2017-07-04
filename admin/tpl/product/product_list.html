@@ -1,0 +1,50 @@
+<h1 class="page-title">{{title}}</h1>
+<ol class="breadcrumb ng-scope">
+    <li>首页</li>
+    <li><a ui-sref="app.product">全部产品</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>{{title}} <small>移动排序</small></h5>
+                <div class="widget-controls">
+                    <button ng-click="save_az()" class="btn btn-primary btn-xs mb-xs">保存排序</button>
+                </div>
+            </header>
+            </header>
+            <div class="widget-body no-padding">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>图片</th>
+                            <th>首页显示价格</th>
+                            <th class="hidden-xs">上架中</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody ui-sortable ng-model="items">
+                        <tr ng-repeat=" i in items ">
+                            <td>{{i.title}}</td>
+                            <td><img class="img-rounded" ng-src="{{__PUBLIC__}}{{i.imgs|first_img}}" alt="" height="50"></td>
+                            <td>{{i.price}}</td>
+                            <td class="hidden-xs text-semi-muted">{{i.status|to_status}}</td>
+                            <td class="width-150">
+                                <button class="btn btn-default btn-sm mb-xs" ui-sref="app.product_detail({id:i.pid})">编辑</button>
+                                <button class="btn btn-danger btn-sm mb-xs" ng-click="delete_product(i.pid)">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

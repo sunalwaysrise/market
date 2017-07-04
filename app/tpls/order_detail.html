@@ -1,0 +1,50 @@
+<div class="header2"><a ng-click="back()" class="iconfont icon-back"></a>订单</div>
+<div class="OD">
+  <div class="list">
+    <div>订单编号：8080-{{d.oid}}</div>
+    <div>订单金额：¥{{d.price}}</div>
+    <div>下单时间：{{d.time*1000|date:"yyyy-MM-dd HH:mm:ss"}}</div>
+    <section>
+      <a ng-if="d.status==1" class="y" ng-href="/market/order/pay/id/{{d.oid}}">点击支付,还剩:{{count_txt}}</i></a>
+      <a ng-if="d.status!=1">{{d.status|to_order_status}}</a>
+    </section>
+  </div>
+
+  <div class="item">
+    <div ng-repeat="i in products" class="li">
+      <div class="image">
+        <img ng-src="{{__PUBLIC__}}{{i.g.imgs|first_img}}" />
+      </div>
+      <div class="content">
+        <section>{{i.g.title}},{{i.style}}</section>
+        <p>{{i.num}}件</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="list">
+    <p><span>{{d.nickname}}</span><em>{{d.phone}}</em></p>
+    <div>{{d.shen}} {{d.shi}} {{d.address}}</div>
+  </div>
+
+  <div class="list" ng-if="has_send">
+    <p><span>配送信息</span></p>
+    <div ng-if="d.kdtime">发货时间：{{d.kdtime*1000|date:"yyyy-MM-dd HH:mm:ss"}}</div>
+    <div>快递单号：{{d.kd}}{{d.kdcode}}
+      <span ng-if="d.kdname">
+        <br/><a class="blue" ng-href="http://m.kuaidi100.com/index_all.html?type={{d.kdname}}&postid={{d.kdcode}}&callbackurl={{callbackurl}}">点击查看物流配送详情</a>
+      </span>
+    </div>
+  </div>
+  <div class="btns" ng-if="d.status==1">
+    <a ng-click="cancel()" class="check">取消订单</a>
+  </div>
+  <div class="btns" ng-if="d.status==4">
+    <a ng-click="check()" class="check">确认收货</a>
+  </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

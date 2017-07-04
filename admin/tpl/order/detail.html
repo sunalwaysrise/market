@@ -1,0 +1,214 @@
+<div class="modal in show" ng-show="show_managetip_dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">管理员备注</h3>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="ng-pristine ng-valid">
+                    <fieldset>
+                        <div class="form-group">
+                          <input type="text" class="form-control" ng-model="managetip_txt">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="managetiped()">确定</button>
+                <button class="btn btn-warning" type="button" ng-click="show_managetip_dialog=!show_managetip_dialog">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal in show" ng-show="show_status_dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">订单状态</h3>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="ng-pristine ng-valid">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="segmented-dropdown">订单状态</label>
+                            <div class="form-control l_select">
+                                <select  class="l_select2" ng-model="to_order_status">
+                                    <option ng-repeat="i in order_status_items" value="{{i.id}}">{{i.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="change_status()">确定</button>
+                <button class="btn btn-warning" type="button" ng-click="show_status_dialog=false">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal in show" ng-show="show_send_dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">发货信息</h3>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="ng-pristine ng-valid">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>物流公司</label>
+                            <div class="form-control l_select">
+                                <select id="kd" class="l_select2" ng-model="kdname">
+                                    <option ng-repeat="i in logistics" value="{{i.id}}">{{i.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="segmented-dropdown">物流单号</label>
+                          <input type="text" class="form-control" ng-model="kdcode">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="send_goods()">确定</button>
+                <button class="btn btn-warning" type="button" ng-click="show_send_dialog=false">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal in show" ng-show="show_logistics_dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">收货信息</h3>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="ng-pristine ng-valid">
+                    <fieldset>
+                        <div class="form-group">
+                          <label>收件人</label>
+                          <input type="text" class="form-control" ng-model="nickname_txt">
+                        </div>
+                        <div class="form-group">
+                          <label>联系电话</label>
+                          <input type="text" class="form-control" ng-model="phone_txt">
+                        </div>
+                        <div class="form-group">
+                          <label>详细地址：({{d.shen}} {{d.shi}})</label>
+                          <input type="text" class="form-control" ng-model="address_txt">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="change_logistics()">确定</button>
+                <button class="btn btn-warning" type="button" ng-click="show_logistics_dialog=false">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11">
+        <section class="widget widget-invoice">
+            <header>
+                <div class="row">
+                    <div class="col-sm-6 col-print-6">
+                        <h2>订单详情</h2>
+                    </div>
+                    <div class="col-sm-6 col-print-6">
+                        <h3 class="text-align-right">#<span class="fw-semi-bold">{{d.oid}}</span> / <small>{{d.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</small></h3>
+                        <div class="text-muted fs-larger text-align-right">订单号</div>
+                    </div>
+                </div>
+            </header>
+            <div class="widget-body">
+                <div class="row mb-lg">
+                    <section class="col-sm-6 col-print-6">
+                        <h4 ng-click="show_logistics_dialog=true" class="text-muted no-margin">收件信息(点击修改)</h4>
+                        <h3 class="company-name">{{d.nickname}}</h3>
+                        <address>
+                            {{d.shen}}{{d.shi}}<br>
+                            {{d.address}}<br>
+                            <abbr title="Work Fax">手机:</abbr>{{d.phone}}
+                        </address>
+                    </section>
+
+                    <section class="col-sm-6 col-print-6 text-align-right">
+                        <h4 class="text-muted no-margin">订单信息</h4>
+                        <h3 class="client-name" ng-click="show_status_dialog=true">订单状态:<b class="text-danger">{{d.status|to_order_status}}</b>(设置)</h3>
+                        <address>
+                            <span ng-if="d.paycode">支付单号:{{d.paycode}}<br/></span>
+                            <span ng-if="d.paytime!=0">支付时间:{{d.paytime}}<br/></span>
+                            <span ng-if="d.kd">
+                              <span ng-if="d.kd">快递公司:{{d.kd}}<br/></span>
+                              <span ng-if="d.kdcode">物流单号:{{d.kdcode}}<br/></span>
+                              <span ng-if="d.kdtime">发货时间:{{d.kdtime*1000|date:'yyyy-MM-dd HH:mm:ss'}}<br/></span>
+                              <a ng-href="http://m.kuaidi100.com/index_all.html?type={{d.kdname}}&postid={{d.kdcode}}" target="_blank">点击查看配送情况</a>
+                            </span>
+
+                            <p class="no-margin"><strong ng-click="show_managetip_dialog=true">备注(点击设置):</strong></p>
+                            <p class="text-muted fs-mini">{{d.managetip}}</p>
+                        </address>
+                    </section>
+
+
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>名称</th>
+                        <th>图片</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="i in items">
+                            <td>{{$index+1}}</td>
+                            <td>{{i.title}}</td>
+                            <td><img class="img-rounded" ng-src="{{__PUBLIC__}}{{i.imgs|first_img}}" alt="" height="50"></td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.num}}</td>
+                            <td>{{i.price*i.num}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-sm-6 col-print-6">
+                        <p><strong>备注:</strong>{{d.summary}}</p>
+                    </div>
+                    <div class="col-sm-6 col-print-6">
+                        <div class="row text-align-right">
+                            <div class="col-xs-6"></div>
+                            <div class="col-xs-3">
+                                <p class="no-margin"><strong>合计</strong></p>
+                            </div>
+                            <div class="col-xs-3">
+                                <p class="no-margin"><strong>{{d.price}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-toolbar mt-lg text-align-right hidden-print">
+                    <button ng-click="print()" class="btn btn-inverse">
+                        <i class="fa fa-print"></i>&nbsp;&nbsp;打印
+                    </button>
+                    <button class="btn btn-danger" ng-click="show_send_dialog=true">
+                        发货&nbsp;<span class="circle bg-white"><i class="fa fa-arrow-right text-danger"></i></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

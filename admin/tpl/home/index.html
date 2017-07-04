@@ -1,0 +1,154 @@
+<h1 class="page-title">首页<small><small>概况</small></small></h1>
+
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <section class="widget bg-primary text-white">
+            <div class="widget-body clearfix">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span class="widget-icon">
+                            <i class="glyphicon glyphicon-user"></i>
+                        </span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h5 class="no-margin">会员总数</h5>
+                        <p class="h2 no-margin fw-normal">{{d.member_count||'--'}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">今日新增</h5>
+                        <p class="value4">{{d.new_member_today||'--'}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">本月新增</h5>
+                        <p class="value4">{{d.new_member_month||'--'}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <section class="widget bg-gray text-white">
+            <div class="widget-body clearfix">
+                <div class="bg-gray">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <span class="widget-icon">
+                                <i class="fa fa-wechat"></i>
+                            </span>
+                        </div>
+                        <div class="col-xs-9">
+                            <h5 class="no-margin">代理商数量</h5>
+                            <p class="h2 no-margin fw-normal">{{d.business_count||'--'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5 class="no-margin">本周新增</h5>
+                            <p class="value4">{{d.week_business_count||'--'}}</p>
+                        </div>
+                        <div class="col-xs-6">
+                            <h5 class="no-margin">本月新增</h5>
+                            <p class="value4">{{d.month_business_count||'--'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="col-md-3 col-sm-6">
+        <section class="widget bg-info text-white">
+            <div class="widget-body clearfix">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span class="widget-icon">
+                            <i class="glyphicon glyphicon-usd"></i>
+                        </span>
+                    </div>
+                    <div class="col-xs-9">
+                        <div>
+                            <h5 class="no-margin">今日销售额</h5>
+                            <p class="h2 no-margin fw-normal">{{d.today_sales||'--'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">本周销售额</h5>
+                        <p>{{d.week_sales||'--'}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">本月销售额</h5>
+                        <p class="value4">{{d.month_sales||'--'}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+   
+
+    <div class="col-md-3 col-sm-6">
+        <section class="widget bg-success text-white">
+            <div class="widget-body clearfix">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span class="widget-icon">
+                            <i class="glyphicon glyphicon-usd"></i>
+                        </span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h5 class="no-margin">今日订单数</h5>
+                        <p class="h2 no-margin fw-normal">{{d.today_order||'--'}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">本周订单数</h5>
+                        <p class="value4">{{d.week_order||'--'}}</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5 class="no-margin">本月订单数</h5>
+                        <p class="value4">{{d.month_order||'--'}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>库存</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="hidden-xs">#</th>
+                            <th>图片</th>
+                            <th>名称</th>
+                            <th>价格</th>
+                            <th>库存</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in d.product">
+                            <td class="hidden-xs">{{$index+1}}</td>
+                            <td><img class="img-rounded" ng-src="{{__PUBLIC__}}{{i.imgs|first_img}}" alt="" height="50"></td>
+                            <td>{{i.title}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+

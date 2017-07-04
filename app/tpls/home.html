@@ -1,0 +1,35 @@
+<div class="H">
+  <div class="header header_order">订单</div>
+  <div class="nav">
+    <nav>
+      <a ng-click="select(1)" ng-class="{'cur':type==1}">未付款</a>
+      <a ng-click="select(2)" ng-class="{'cur':type==2}">已付款</a>
+      <a ng-click="select(4)" ng-class="{'cur':type==4}">已发货</a>
+      <a ng-click="select(6)" ng-class="{'cur':type==6}">已完成</a>
+      <a ng-click="select(8)" ng-class="{'cur':type==8}">已取消</a>
+      <a ng-click="select(0)" ng-class="{'cur':type==0}">全部</a>
+    </nav>
+  </div>
+  <ul>
+    <li ng-repeat="i in items" ng-click="order_detail(i.oid)">
+      <div class="image">
+        <img ng-src="{{__PUBLIC__}}{{i.img}}" />
+      </div>
+      <div class="content">
+        <h2 class="status_{{i.status}}">{{i.status|to_order_status}}</h2>
+        <p>{{i.summary}}</p>
+        <time>{{i.time*1000|date:"yyyy-MM-dd HH:mm:ss"}}</time>
+      </div>
+    </li>
+  </ul>
+  <div class="pages">
+    <a ng-click="prev()">上一页</a>
+    <span>{{page+1}}/{{total}}</span>
+    <a ng-click="next()">下一页</a>
+  </div>
+</div>
+<mynav car_count='{{car.car_count}}'></mynav>
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

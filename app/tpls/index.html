@@ -1,0 +1,46 @@
+<div class="index_banner banner">
+  <ul style="width:{{count}}%;" ontouchstart="touch.touchStart(event)" ontouchmove="touch.touchMove(event);" ontouchend="touch.touchEnd();" id="slide">
+    <li style="width:{{per}}%" ng-repeat='i in banners'>
+      <a href="{{i.link}}">
+        <img ng-src="{{__PUBLIC__}}/{{i.image}}" />
+      </a>
+    </li>
+  </ul>
+  <p id="slideBar" class="bar">
+     <i ng-repeat="i in banners"></i>
+  </p>
+</div>
+<div class="logo"></div>
+<div class="pb50">
+  <div ng-repeat="item in products" class="products">
+    <h2 class="title title_{{$index}}" onclick='$(this).parent().toggleClass("cur")'>{{item.name}}</h2>
+    <ul>
+      <li ng-repeat="i in item.products">
+        <a href="#!/detail/{{i.pid}}">
+          <div class="img">
+            <img ng-src="{{__PUBLIC__}}/{{i.imgs|first_img}}">
+          </div>
+          <h3>{{i.title}}</h3>
+          <p>
+            <b>¥{{i.price}}</b>
+            <del ng-if="i.price0">¥{{i.price0}}</del>
+          </p>
+          <span>订购</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="copy">
+    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010502004361" >
+      浙公网安备33010502004361号
+    </a>
+  </div>
+</div>
+<mynav car_count='{{car.car_count}}'></mynav>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>
+
+

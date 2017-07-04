@@ -1,0 +1,105 @@
+<h1 class="page-title">{{title}}</h1>
+<ol class="breadcrumb ng-scope">
+    <li>首页</li>
+    <li><a ui-sref="app.banner">首页广告</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>{{title}}</h5>
+            </header>
+            
+            <div class="widget-body">
+                <form class="form-horizontal" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="normal-title" class="col-sm-2 control-label">名称</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="normal-title" class="form-control" ng-model="d.title">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="normal-link" class="col-sm-2 control-label">
+                                地址
+                                <span class="help-block">可为空</span>
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" id="normal-link" class="form-control" ng-model="d.link">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="normal-category">是否展示</label>
+                            <div class="col-sm-2 ">
+                              <div class="form-control l_select">
+                                  <select id="normal-category" class="l_select2" ng-model="d.status">
+                                      <option  value="1">是</option>
+                                      <option  value="0">否</option>
+                                  </select>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-sm-2 control-label">重选图片</label>
+                          <div class="col-md-5">
+                            <input class="form-control" type="file" id="file1" />
+                          </div>
+                          <div class="col-md-4">
+                            <button type="button" class="btn btn-default" ng-click="btn_upload()">上传图片</button>
+                            <button type="button" class="btn btn-default" ng-click="btn_clean()">删除全部</button>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-8">
+                            <div ng-repeat="file in files" class="upload_progress">
+                              <div class="row">
+                                  <div class="col-md-8">{{file.name}}</div>
+                                  <div class="col-md-4 text-align-right">
+                                      <span>{{file.humanSize}}</span>
+                                      <a ng-click="btn_remove(file)" >删除</a>
+                                  </div>
+                              </div>
+                              <progress value="{{file.loaded}}" max="{{file.size}}"></progress>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-sm-2 control-label">预览</label>
+                          <div class="col-sm-10">
+                            <div class="well images_sort_box" >
+                              <div class="images_sort" ng-repeat="i in images">
+                                <img ng-src="{{__PUBLIC__}}{{i}}" />
+                                <span ng-click="remove(i)" class="glyphicon glyphicon-remove"></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <button ng-click="save()" type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

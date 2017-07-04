@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" ng-app="app">
+<head>
+<meta charset="utf-8"/>
+<title>{{app_title||'首页'}}</title>
+<meta name="format-detection" content="telphone=no,email=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=1"/>
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css" href="/app/res/app/iconfont/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="/app/res/app/weui.css"/>
+<link rel="stylesheet" type="text/css" href="/app/res/app/css.css?v=2017061402"/>
+<script src="/app/res/angular/angular/angular.min.js"></script>
+<script src="/app/res/angular/angular/angular-animate.min.js"></script>
+<script src="/app/res/angular/angular/angular-resource.min.js"></script>
+<script src="/app/res/angular/angular/angular-route.min.js"></script>
+<script src="/app/res/angular/angular/angular-sanitize.min.js"></script>
+<script src="/app/res/angular/angular/angular-touch.min.js"></script>
+</head>
+<body>
+<div class="warp" ng-view></div>
+</body>
+<script src="/app/res/jquery/jquery.min.js"></script>
+<script src="/app/res/app/controllers.js?v=20170627"></script>
+<script src="/app/res/app/filters.js"></script>
+<script src="/app/res/app/directives.js"></script>
+<script src="/app/res/app/services.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+function loadShare(o){
+  var URL=decodeURI(window.location.href);
+  console.log(URL.length)
+  $.get('{:U("market/common/getSignPackageBack")}',{url:URL},function(d){
+    console.log(d);
+    // alert(JSON.stringify(d))
+    var share={
+      t:o.title,
+      d:o.summary,
+      // l:o.url,
+      l:URL,
+      // l:d.url,
+      i:o.icon
+    };
+    wx.config({
+      debug:false,
+      appId:d.appId,
+      timestamp:d.timestamp,
+      nonceStr:d.nonceStr,
+      signature:d.signature,
+      jsApiList:['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo']
+    });
+    wx.error(function(e){
+      // alert(JOSN.stringify(e))
+    });
+    wx.ready(function(){
+      wx.checkJsApi({
+        jsApiList:['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'],
+        success:function(res){
+          // alert('checkAPI'+JSON.stringify(res))
+        }
+      });
+      wx.onMenuShareTimeline({
+        title:share.t,
+        link:share.l,
+        imgUrl:share.i,
+        success:function(res){},
+        cancel:function(res){},
+      });
+      wx.onMenuShareAppMessage({
+        title:share.t,
+        desc:share.d,
+        link:share.l,
+        imgUrl:share.i,
+        trigger:function(res){},
+        success:function(res){},
+        cancel:function(res){},
+        fail:function(res){}
+      });
+    });
+  });
+}
+</script>
+<script src="/app/res/app/app.js"></script>
+</html>

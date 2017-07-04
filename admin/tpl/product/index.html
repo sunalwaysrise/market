@@ -1,0 +1,28 @@
+<h1 class="page-title">全部产品</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>全部类别 <small>点击类别查看产品详情</small> </h5>
+            </header>
+            <div class="widget-body no-padding">
+                <div class="list-group list-group-lg">
+                    <div class="list-group-item" ng-repeat="i in items">
+                        <div class="row">
+                            <div class="col-md-8">{{i.name}}</div>
+                            <div class="col-md-4 text-align-right">
+                                <a class="btn btn-default btn-sm mb-xs" ui-sref="app.product_list({id:i.tid})">查看全部产品</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

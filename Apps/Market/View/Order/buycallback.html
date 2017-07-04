@@ -1,0 +1,27 @@
+<include file="Index/head"/>
+<div class="payManmge">
+  <eq name="r.status" value="1">
+    <!-- <a class="btn1" href="/Index/Home/pay/id/{$r.oid}">去支付</a> -->
+  </eq>
+  <a class="btn1" href="/Index/Home/order/id/{$r.oid}/t/2">{$s}</a>
+</div>
+<eq name="notFocus" value="1">
+    <div id="notFocus">
+        <div class="notFocus">
+            <h2>您还未关注我们,关注会送积分哦~</h2>
+            <a href="http://mp.weixin.qq.com/s?__biz=MjM5NTc5NzEzNw==&mid=206130777&idx=1&sn=7dfe7fe540ddf9c86a520f71b3c196c2#rd">去关注</a>
+            </div>
+    </div>
+</eq>
+</div>
+<script src="__PUBLIC__/res/js/util/jquery-1.11.1.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+$("#loading").hide();
+<eq name="r.status" value="1">
+location.href='/Index/Home/order/id/{$r.oid}';
+</eq>
+$("#notFocus").click(function(){$(this).hide();});
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<h1 class="page-title">
+    首页广告
+    <button ui-sref="app.banner_detail({id:0})" class="btn btn-default btn-sm">添加广告</button>
+</h1>
+<ol class="breadcrumb ng-scope">
+    <li>首页</li>
+    <li class="active">首页广告</li>
+</ol>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>首页广告 <small>移动排序</small></h5>
+                <div class="widget-controls">
+                    <button ng-click="save_az()" class="btn btn-primary btn-xs mb-xs">保存排序</button>
+                </div>
+            </header>
+            </header>
+            <div class="widget-body no-padding">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>图片</th>
+                            <th>标题</th>
+                            <th>链接地址</th>
+                            <th class="hidden-xs">是否显示</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody ui-sortable ng-model="items">
+                        <tr ng-repeat=" i in items ">
+                            <td class="width-200"><img class="img-rounded" ng-src="{{__PUBLIC__}}{{i.image}}" alt="" height="50"></td>
+                            <td>{{i.title}}</td>
+                            <td>{{i.link}}</td>
+                            <td class="width-150">{{i.status|to_status}}</td>
+                            <td class="width-150">
+                                <button class="btn btn-default btn-sm mb-xs" ui-sref="app.banner_detail({id:i.bid})">编辑</button>
+                                <button class="btn btn-danger btn-sm mb-xs" ng-click="delete_banner(i.bid)">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

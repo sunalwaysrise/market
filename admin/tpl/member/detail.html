@@ -1,0 +1,74 @@
+<h1 class="page-title">会员详情</h1>
+<ol class="breadcrumb ng-scope">
+    <li>首页</li>
+    <li><a ui-sref="app.member">全部会员</a></li>
+    <li class="active">会员详情</li>
+</ol>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>会员详情</h5>
+            </header>
+            
+            <div class="widget-body">
+                <form class="form-horizontal" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">姓名</div>
+                            <div class="col-sm-7">{{d.realname}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">全部订单</div>
+                            <div class="col-sm-7"><a ui-sref="app.member_order({id:d.uid})" >点击查看</a></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">微信昵称</div>
+                            <div class="col-sm-7">{{d.realname}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">头像</div>
+                            <div class="col-sm-7"><img class="img-rounded" ng-src="{{d.headimgurl}}" alt="" height="50"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">openid</div>
+                            <div class="col-sm-7">{{d.openid}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">性别</div>
+                            <div class="col-sm-7">{{d.sex|to_sex}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">国家</div>
+                            <div class="col-sm-7">{{d.country}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">省</div>
+                            <div class="col-sm-7">{{d.province}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">市</div>
+                            <div class="col-sm-7">{{d.city}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 text-align-right">电话</div>
+                            <div class="col-sm-7">{{d.telephone}}</div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions" ng-if="!locked">
+                        <div class="row">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <button ng-click="lock()" type="submit" class="btn btn-primary">设置为销售代表</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

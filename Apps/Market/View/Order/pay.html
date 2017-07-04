@@ -1,0 +1,85 @@
+<include file="Index/head"/>
+<div class="payManmge">
+  <p>¥{$d.price}元</p>
+  <a id="chooseWXPay" class="btn1">支付 <i id="endtime"></i></a>
+</div>
+</div>
+<script src="__PUBLIC__/res/js/util/jquery-1.11.1.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+$("#loading").hide();
+$("#coupons li").click(function(){
+  $("#coupons li").removeClass('on');
+  $(this).addClass('on');
+  var coupons=$(this).index();
+  window.coupons=coupons;
+  if(coupons==0){
+    $("#coupons0").html('不使用');
+  }else{
+    
+  }
+});
+var kk='{$p}',appId='{$appid}';
+try{
+  kk=eval('('+kk+')');
+}catch(e){alert(1);alert(e);}
+wx.config({
+  debug:false,
+  appId:appId,
+  timestamp:'{$signPackage["timestamp"]}',
+  nonceStr:'{$signPackage["nonceStr"]}',
+  signature:'{$signPackage["signature"]}',
+  jsApiList:['chooseWXPay']
+});
+var oid='{$d.oid}',c=0;
+<eq name="pay" value="1">
+try{
+  var c='{$endtime}';
+  function count(){
+    if(c>0){
+      c--;
+      var k=new Date(c*1000).getMinutes()+"分"+new Date(c*1000).getSeconds()+"秒";
+      $('#endtime').html('，截至支付还剩 '+k);
+      setTimeout('count()',1000);
+    }else if(c==0){
+      location.reload();
+    }
+  }
+  count();
+}catch(e){alert(2);alert(e)}
+setTimeout(function(){
+  location.reload();
+},30000);
+</eq>
+wx.ready(function(){
+  wx.checkJsApi({
+    jsApiList:['chooseWXPay'],
+    success:function(res){}
+  });
+  $('#chooseWXPay').click(function(){
+    if($(this).html()=='支付成功'){
+      location.href='/Index/Index/order/id/{$d.oid}';
+    }else{
+      if(Number(c)>0){
+        wx.chooseWXPay({
+          timestamp:kk.timeStamp,
+          nonceStr:kk.nonceStr,
+          package:'prepay_id={$prepay_id}',
+          signType:'MD5',
+          paySign:kk.paySign,
+          success:function(res){
+            $("#load").show();
+            alert('订单已确认');
+            location.href='/Index/Home/buycallback/oid/'+oid;
+          }
+        });
+      }else{
+        alert('订单已截止支付');
+      }
+    }
+  });
+});
+
+</script>
+</body>
+</html>

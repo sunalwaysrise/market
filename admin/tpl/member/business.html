@@ -1,0 +1,76 @@
+<ol class="breadcrumb">
+    <li>首页</li>
+    <li class="active">销售代表</li>
+</ol>
+<h1 class="page-title">销售代表 - <span class="fw-semi-bold">全部</span></h1>
+<div class="row widget">
+    <div class="col-md-12">
+        <h4>选择起止时间</h4>
+        <div class="row">
+            <div class="col-md-5">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                     </span>
+                </p>
+            </div>
+            <div class="col-md-5">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" ng-click="search()">查找</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>销售代表</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="hidden-xs"></th>
+                            <th>图片</th>
+                            <th>描述</th>
+                            <th class="hidden-xs">信息</th>
+                            <th class="hidden-xs">日期</th>
+                            <th class="hidden-xs">大小</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in lists ">
+                            <td class="hidden-xs">{{$index+1}}</td>
+                            <td><img class="img-rounded" ng-src="{{i.url}}" alt="" height="50"></td>
+                            <td ng-bind-html="i.description"></td>
+                            <td class="hidden-xs">
+                                <p class="no-margin"><small><span class="fw-semi-bold">类型:</span><span class="text-semi-muted">&nbsp; {{i.info.Type}}</span></small></p>
+                                <p><small><span class="fw-semi-bold">大小:</span><span class="text-semi-muted">&nbsp; {{i.info.Dimensions}}</span></small></p>
+                            </td>
+                            <td class="hidden-xs text-semi-muted">{{i.date}}</td>
+                            <td class="hidden-xs text-semi-muted">{{i.size}}</td>
+                            <td class="width-150">
+                                <div class="progress progress-sm mt-xs js-progress-animate">
+                                    <div class="progress-bar progress-bar-{{i.progress_status}}"  style="width: {{i.progress}}%;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="pull-right">
+                        <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" previous-text="上一页" next-text="下一页"  first-text="第一页" last-text="最后一页"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<h1 class="page-title">会员统计</h1>
+<div class="row widget">
+    <div class="col-md-8">
+        <div class="row">
+            <h4>您要查最近几个月的会员</h4>
+            <div class="row">
+                <div class="col-md-5">
+                    <p class="input-group">
+                        <input type="number" class="form-control" ng-model="season" />
+                    </p>
+                </div>
+                
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" ng-click="reload()">查找</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>近{{season_txt}}个月 用户变化</h5>
+                <div class="widget-controls"><a><i ng-click="load()" class="fa fa-refresh"></i></a></div>
+            </header>
+            <div class="widget-body">
+
+
+                <canvas id="line2" class="chart chart-line" chart-data="line_data" chart-labels="line_labels" chart-options="line_options" chart-dataset-override="line_override"></canvas>
+
+            </div>
+        </section>
+    </div>
+
+</div>

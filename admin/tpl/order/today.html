@@ -1,0 +1,130 @@
+<ol class="breadcrumb">
+    <li>首页</li>
+    <li class="active">今日订单</li>
+</ol>
+<h1 class="page-title">今日订单</h1>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>未发货</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>概要</th>
+                            <th>总金额</th>
+                            <th>收货人信息</th>
+                            <th class="width-150">下单时间</th>
+                            <th class="width-150">支付时间</th>
+                            <th class="width-150">支付单号</th>
+                            <th class="width-150">订单状态</th>
+                            <th class="width-150"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in today_unsend_order ">
+                            <td>{{i.oid}}</td>
+                            <td>{{i.summary}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.nickname}},{{i.phone}},{{i.shen}},{{i.shi}},{{i.address}}{{i.code}}</td>
+                            <td>{{i.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                               <span ng-if="i.paytime!=0">{{i.paytime*1000|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
+                            <td>{{i.paycode}}</td>
+                            <td>{{i.status|to_order_status}}</td>
+                            <td>
+                                <a class="btn btn-default btn-sm mb-xs" ui-sref="app.order_detail({id:i.oid})">查看详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>已完成</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>概要</th>
+                            <th>总金额</th>
+                            <th>收货人信息</th>
+                            <th class="width-150">下单时间</th>
+                            <th class="width-150">支付时间</th>
+                            <th class="width-150">支付单号</th>
+                            <th class="width-150">订单状态</th>
+                            <th class="width-150"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in today_finished_order ">
+                            <td>{{i.oid}}</td>
+                            <td>{{i.summary}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.nickname}},{{i.phone}},{{i.shen}},{{i.shi}},{{i.address}}{{i.code}}</td>
+                            <td>{{i.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                               <span ng-if="i.paytime!=0">{{i.paytime*1000|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
+                            <td>{{i.paycode}}</td>
+                            <td>{{i.status|to_order_status}}</td>
+                            <td>
+                                <a class="btn btn-default btn-sm mb-xs" ui-sref="app.order_detail({id:i.oid})">查看详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>今日全部订单</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>概要</th>
+                            <th>总金额</th>
+                            <th>收货人信息</th>
+                            <th class="width-150">下单时间</th>
+                            <th class="width-150">支付时间</th>
+                            <th class="width-150">支付单号</th>
+                            <th class="width-150">订单状态</th>
+                            <th class="width-150"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in today_total_order ">
+                            <td>{{i.oid}}</td>
+                            <td>{{i.summary}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.nickname}},{{i.phone}},{{i.shen}},{{i.shi}},{{i.address}}{{i.code}}</td>
+                            <td>{{i.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                               <span ng-if="i.paytime!=0">{{i.paytime*1000|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
+                            <td>{{i.paycode}}</td>
+                            <td>{{i.status|to_order_status}}</td>
+                            <td>
+                                <a class="btn btn-default btn-sm mb-xs" ui-sref="app.order_detail({id:i.oid})">查看详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

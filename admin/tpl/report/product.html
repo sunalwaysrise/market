@@ -1,0 +1,44 @@
+<h1 class="page-title">产品销售额统计</h1>
+<div class="row widget">
+    <div class="col-md-8">
+        <div class="row">
+            <h4>选择起止时间</h4>
+            <div class="row">
+                <div class="col-md-5">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                         </span>
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" ng-click="search()">查找</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>产品销售额</h5>
+            </header>
+            <div class="widget-body">
+                <canvas id="chart-bar1" class="chart chart-bar" chart-data="entry_count" chart-labels="entry_name"  chart-colors="line_override_entry"  chart-options="line_option"></canvas>
+            </div>
+        </section>
+    </div>
+</div>
+
+

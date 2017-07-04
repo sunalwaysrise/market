@@ -1,0 +1,118 @@
+<ol class="breadcrumb">
+    <li>首页</li>
+    <li class="active">全部订单</li>
+</ol>
+<h1 class="page-title">全部订单</h1>
+<div class="row widget">
+    <div class="col-md-5">
+        <h4>选择起止时间</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="begin_time" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                     </span>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" uib-datepicker-popup ng-model="end_time" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <h4>订单状态</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-control l_select">
+                    <select  class="l_select2" ng-model="status">
+                        <option ng-repeat='i in order_status' value="{{i.id}}">{{i.value}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <h4>支付单号</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                   <input type="text" class="form-control"  ng-model="paycode"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h4>收件人</h4>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="input-group">
+                   <input type="text" class="form-control" ng-model="nickname" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" ng-click="search()">查找</button>
+            </div>
+        </div>
+    </div>
+
+            
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>全部订单</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>概要</th>
+                            <th>总金额</th>
+                            <th>收货人信息</th>
+                            <th class="width-150">下单时间</th>
+                            <th class="width-150">支付时间</th>
+                            <th class="width-150">支付单号</th>
+                            <th class="width-150">订单状态</th>
+                            <th class="width-150"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in items ">
+                            <td>{{i.oid}}</td>
+                            <td>{{i.summary}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.nickname}},{{i.phone}},{{i.shen}},{{i.shi}},{{i.address}}{{i.code}}</td>
+                            <td>{{i.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                               <span ng-if="i.paytime!=0">{{i.paytime*1000|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
+                            <td>{{i.paycode}}</td>
+                            <td>{{i.status|to_order_status}}</td>
+                            <td>
+                                <a class="btn btn-default btn-sm mb-xs" ui-sref="app.order_detail({id:i.oid})">查看详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="pull-right">
+                        
+                <ul uib-pagination ng-change="page()" items-per-page="page_size" total-items="total_items" ng-model="p" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" previous-text="上一页" next-text="下一页"  first-text="第一页" last-text="最后一页"></ul>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

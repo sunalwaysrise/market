@@ -1,0 +1,73 @@
+<h1 class="page-title">类别管理</h1>
+<div class="modal in show" ng-show="show_edit_dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">{{title}}</h3>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="ng-pristine ng-valid">
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="category_name" placeholder="类别名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="segmented-dropdown">激活</label>
+                            <div class="form-control l_select">
+                                <select  class="l_select2" ng-model="category_status">
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ok()">确定</button>
+                <button class="btn btn-warning" type="button" ng-click="show_edit_dialog=!show_edit_dialog">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="btn-toolbar text-align-right">
+                <button type="button" class="btn btn-default" ng-click="add()">添加类别</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header>
+                <h5>全部类别 <small>移动排序</small></h5>
+                <div class="widget-controls">
+                    <button ng-click="save_az()" class="btn btn-primary btn-xs mb-xs">保存排序</button>
+                </div>
+            </header>
+            <div class="widget-body no-padding">
+                <div  ui-sortable ng-model="items" class="list-group list-group-lg">
+                    <div class="list-group-item" ng-repeat="i in items">
+                        <div class="row">
+                            <div class="col-md-5">{{i.name}}</div>
+                            <div class="col-md-3">是否上线:{{i.status|to_status}}</div>
+                            <div class="col-md-4 text-align-right">
+                                <button class="btn btn-default btn-sm mb-xs" ng-click="edit_category(i.tid,i.name,i.status)">编辑</button>
+                                <button class="btn btn-danger btn-sm mb-xs" ng-click="delete_category(i.tid)">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<confirm ng-if='openConfirm' title='{{confirm.title}}' txt='{{confirm.txt}}' sure='confirm.sure()' cancel='confirm.cancel()'></confirm>
+<alert ng-if='openAlert' txt='{{alert.txt}}' sure='alert.sure()'></alert>
+<tip ng-if='openTip' txt={{tip.txt}}></tip>
+<loading ng-if='loading'></loading>

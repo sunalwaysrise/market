@@ -1,0 +1,53 @@
+<ol class="breadcrumb">
+    <li>首页</li>
+    <li><a ui-sref="app.member">全部会员</a></li>
+    <li><a ui-sref="app.member_detail({id:user.uid})">全部详情</a></li>
+    <li class="active">会员 {{user.realname||user.nickname}} 的全部订单</li>
+</ol>
+<h1 class="page-title">会员 {{user.realname||user.nickname}} 的全部订单</h1>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <header><h4>销售代表</h4></header>
+            <div class="widget-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>概要</th>
+                            <th>总金额</th>
+                            <th>收货人信息</th>
+                            <th class="width-150">下单时间</th>
+                            <th class="width-150">支付时间</th>
+                            <th class="width-150">支付单号</th>
+                            <th class="width-150">订单状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat=" i in items ">
+                            <td>{{i.oid}}</td>
+                            <td>{{i.summary}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.nickname}},{{i.phone}},{{i.shen}},{{i.shi}},{{i.address}}{{i.code}}</td>
+                            <td>{{i.time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                               <span ng-if="i.paytime!=0">{{i.paytime*1000|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
+                            <td>{{i.paycode}}</td>
+                            <td>
+                                {{i.status|to_order_status}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="pull-right">
+                        
+                <ul uib-pagination ng-change="page()" items-per-page="page_size" total-items="total_items" ng-model="p" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true" previous-text="上一页" next-text="下一页"  first-text="第一页" last-text="最后一页"></ul>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
