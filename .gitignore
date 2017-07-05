@@ -49,3 +49,6 @@ Temporary Items
 Apps/Common/Conf/config.php
 Apps/Market/Controller/ApiController.class.php
 Apps/Market/Controller/CommonController.class.php
+admin/bower_components/
+admin/libs/
+admin/node_modules/
