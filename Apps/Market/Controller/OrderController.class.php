@@ -253,10 +253,10 @@ class OrderController extends CommonController{
           if($d["openid"]==session('openid')){
             $data['d']=$d;
             $r['order']=$d;
-            $url = "http://".DOMAIN."/index/api/result";
+            $url = "http://".DOMAIN."/market/api/result";
             $total_fee=$d['price']*100;
             $pD['out_trade_no']=$d['oid'];
-            $pD['body']=mb_substr($d['desc'],0,15,'utf-8');
+            $pD['body']=mb_substr($d['summary'],0,15,'utf-8');
             $pD['total_fee']=$total_fee;
             $pD['notify_url']=$url;
             $pD['trade_type']='JSAPI';
@@ -291,6 +291,7 @@ class OrderController extends CommonController{
             $endtime=($d['time']+PAY_OUT_TIME-time());
             $this->assign("endtime",$endtime);
             $this->assign("pay",$d['status']);
+            $this->assign("d",$d);
           }else{
             $msg='没有支付权限';
           }

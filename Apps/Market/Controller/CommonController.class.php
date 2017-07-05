@@ -6,7 +6,10 @@ use Think\Controller;
 */
 class CommonController extends Controller{
 
-  
+  protected $appId="wxcdaf4f91f65ff448";
+  protected $appSecret="f5aad4174c3b5050e2af0491b1f5048f";
+  protected $mchId="1480845562";
+  protected $KEY='0e2af0491b1f5048ff5aad4174c3b505';
   public $PAY_STATUS_CODE=array('1'=>'待付款,去支付','2'=>'已支付','3'=>'待发货','4'=>'已发货','5'=>'已签收','6'=>'已完成','7'=>'已过期','8'=>'已取消');
 
   private function set_pid($k,$M){

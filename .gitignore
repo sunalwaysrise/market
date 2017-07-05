@@ -46,3 +46,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.json
+Apps/Common/Conf/config.php
+Apps/Market/Controller/ApiController.class.php
+Apps/Market/Controller/CommonController.class.php

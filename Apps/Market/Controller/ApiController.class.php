@@ -34,6 +34,7 @@ class ApiController extends Controller {
       $signature = $_GET["signature"];
       $timestamp = $_GET["timestamp"];
       $nonce = $_GET["nonce"];    
+      $token = 'wutuaa1d3g5';
       $tmpArr = array($token, $timestamp, $nonce);
       sort($tmpArr);
       $tmpStr = implode( $tmpArr );
