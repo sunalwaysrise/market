@@ -100,7 +100,7 @@ r.config(['$routeProvider', '$locationProvider', function($routeProvider, $locat
     templateUrl: CONFIG.TPL + 'order_detail.html',
     controller: 'order_detail'
   }).when('/service', {
-    templateUrl: CONFIG.TPL + 'service.html',
+    templateUrl: CONFIG.TPL + 'service.html?v=20170706',
     controller: 'service'
   }).otherwise({
     redirectTo: '/index'
