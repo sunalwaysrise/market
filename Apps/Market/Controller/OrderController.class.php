@@ -6,6 +6,7 @@ use Think\Controller;
 */
 class OrderController extends CommonController{
   public $pagesize=10;
+  
   /*我的订单*/
   public function index($p=0){
     $t=I('t');
@@ -368,11 +369,13 @@ class OrderController extends CommonController{
       //订单子表数据更新
       $F['status']=2;
       M('orderdetail')->where('oid='.$oid)->save($F);
-      $this->mb($D);
+      \Think\Log::write('调用模板','ERR1');
+      $this->pay_success_mb($D);
     }else{
       \Think\Log::write($oid.'支付成功,更新失败','paySuccessERR');
     }
   }
+
 
   /*未支付*/
   private function payEnd($oid){
@@ -395,5 +398,55 @@ class OrderController extends CommonController{
       }
     }
   }
+
+
+  protected function pay_success_mb($D){
+    $accessToken = $this->getAccessToken();
+    $url='https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$accessToken;
+    $openid=$D['openid'];
+    $summary=$D['summary'];
+    $oid=$D['oid'];
+    $price=$D['price'];
+    $first='您好，您的订单已支付';
+    $link="http://".DOMAIN."/#!/order_detail/".$oid;
+    $remark="我们马上为您发货，感谢您的光临~";
+    $json='{
+      "touser":"'.$openid.'",
+      "template_id":"'.$this->PAY_SUCCESS_TPL.'",
+      "url":"'.$link.'",
+      "topcolor":"#FF0000",
+      "data":{
+        "first": {
+        "value":"'.$first.'",
+        "color":"#173177"
+        },
+        "keyword1": {
+        "value":"'.$summary.'",
+        "color":"#173177"
+        },
+        "keyword2":{
+        "value":"订单号8080-'.$oid.'",
+        "color":"#173177"
+        },
+        "keyword3":{
+        "value":"'.$price.'",
+        "color":"#173177"
+        },
+        "remark":{
+        "value":"'.$remark.'",
+        "color":"#173177"
+        }
+      }
+    }';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_URL,$url);  
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);  
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result=curl_exec($ch);  
+    \Think\Log::write('订单:'.$oid.'调用模板'.$result,'ERR');
+  }
+
+
 
 }

@@ -14,10 +14,12 @@ class OrderController extends CommonController {
     }
   }
   // //正式
-  private $appId="";
-  private $appSecret="";
-  private $mchId="";
-  private $KEY='';
+
+  protected $appId="";
+  protected $appSecret="";
+  protected $mchId="";
+  protected $KEY='';
+
   public function getSignPackage(){
     $jsapiTicket = $this->getJsApiTicket();
     $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -552,17 +554,18 @@ class OrderController extends CommonController {
     $accessToken = $this->getAccessToken();
     $url='https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$accessToken;
     $openid=$D['openid'];
+    $summary=$D['summary'];
     $oid=$D['oid'];
-    $desc=$D['desc'];
+    $kd=$D['kd'];
+    $kdcode=$D['kdcode'];
     $nickname=$D['nickname'];
-    $desc=$D['shen'].''.$D['shi'].''.$D['address'];
-    $remark=$D['shen'].''.$D['shi'].''.$D['address'];
-    $price=$D['kd'].'。发货时间:'.date("Y-m-d H:i:s",$D['kdtime']);
-    $t1=date("Y-m-d H:i:s",$D['time']);
+    $address=$D['shen'].''.$D['shi'].''.$D['address'];
+    $remark='发货时间:'.date("Y-m-d H:i:s",$D['kdtime']);
+    $link="http://".DOMAIN."/#!/order_detail/".$oid;
     $json='{
       "touser":"'.$openid.'",
-      "template_id":"hlUgXsi3ww2YhJaj5h9w3c3zonIpYVVVnac_54RndRY",
-      "url":"http://m.leadmedia.com.cn/Index/Home/order/t/2/id/'.$oid.'",
+      "template_id":"c7GI_YQ4EN6Z-keAxt9l_Xz2hpApfDKJPLa2H7LXEs4",
+      "url":"'.$oid.'",
       "topcolor":"#FF0000",
       "data":{
         "first": {
@@ -570,23 +573,19 @@ class OrderController extends CommonController {
         "color":"#173177"
         },
         "keyword1": {
-        "value":"订单号8080-'.$oid.'",
+        "value":"'.$summary.'",
         "color":"#173177"
         },
         "keyword2":{
-        "value":"'.$t1.'",
+        "value":"'.$kd.'",
         "color":"#173177"
         },
         "keyword3":{
-        "value":"'.$price.'",
+        "value":"'.$kdcode.'",
         "color":"#173177"
         },
         "keyword4":{
-        "value":"'.$nickname.'",
-        "color":"#173177"
-        },
-        "keyword5":{
-        "value":"'.$desc.'",
+        "value":"'.$address.'",
         "color":"#173177"
         },
         "remark":{

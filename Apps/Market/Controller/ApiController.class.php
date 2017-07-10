@@ -1,7 +1,9 @@
 <?php
-namespace Index\Controller;
+namespace Market\Controller;
 use Think\Controller;
 class ApiController extends Controller {
+  public $PAY_SUCCESS_TPL="";
+
   public function index(){
   }
   public function valid(){
@@ -46,7 +48,7 @@ class ApiController extends Controller {
       }
   }
             
-  private $KEY='';
+  protected $KEY='';
 
   public function formatBizQueryParaMap($paraMap, $urlencode){
     $buff = "";
@@ -125,13 +127,14 @@ class ApiController extends Controller {
               $F['status']=2;
               $O2->save($F);
             }
-            \Think\Log::write($O2['id'].'PAYSUCCESS');
+            $this->pay_success_mb($order);
+            \Think\Log::write($oid.'PAYSUCCESS');
             if(!$k){
-              \Think\Log::write('O:'.$O2['id'].':40001');
+              \Think\Log::write('O:'.$oid.':40001');
             }
             echo "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
           }else{
-            \Think\Log::write('O:'.$O2['id'].':40002');
+            \Think\Log::write('O:'.$oid.':40002');
             echo "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[SIGN_ERROR]]></return_msg></xml>";
           }
         }else{
@@ -143,6 +146,79 @@ class ApiController extends Controller {
     }else{
       echo "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[EMPTY]]></return_msg></xml>";
     }
+  }
+
+  protected function getAccessToken() {
+    // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
+    //$data = json_decode(file_get_contents("access_token.json"));
+    $data = S('weixin_access_token');
+    if ($data->expire_time < time()) {
+      $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
+      $res = json_decode($this->httpGet($url));
+      $access_token = $res->access_token;
+      if ($access_token) {
+        $data->expire_time = time() + 7000;
+        $data->access_token = $access_token;
+        // $fp = fopen("access_token.json", "w");
+        // fwrite($fp, json_encode($data));
+        // fclose($fp);
+        S('weixin_access_token',$data);// 缓存数据7200秒
+      }
+    } else {
+      $access_token = $data->access_token;
+    }
+    return $access_token;
+  }
+
+  public function test($id=114){
+    $this->pay_success_mb(M('order')->find($id));
+  }
+  
+  protected function pay_success_mb($D){
+    $accessToken = $this->getAccessToken();
+    $url='https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$accessToken;
+    $openid=$D['openid'];
+    $summary=$D['summary'];
+    $oid=$D['oid'];
+    $price=$D['price'];
+    $first='您好，您的订单已支付';
+    $link="http://".DOMAIN."/#!/order_detail/".$oid;
+    $remark="我们马上为您发货，感谢您的光临~";
+    $json='{
+      "touser":"'.$openid.'",
+      "template_id":"'.$this->PAY_SUCCESS_TPL.'",
+      "url":"'.$link.'",
+      "topcolor":"#FF0000",
+      "data":{
+        "first": {
+        "value":"'.$first.'",
+        "color":"#173177"
+        },
+        "keyword1": {
+        "value":"'.$summary.'",
+        "color":"#173177"
+        },
+        "keyword2":{
+        "value":"订单号8080-'.$oid.'",
+        "color":"#173177"
+        },
+        "keyword3":{
+        "value":"'.$price.'",
+        "color":"#173177"
+        },
+        "remark":{
+        "value":"'.$remark.'",
+        "color":"#173177"
+        }
+      }
+    }';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_URL,$url);  
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);  
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result=curl_exec($ch);  
+    \Think\Log::write('订单:'.$oid.'调用模板'.$result,'ERR');
   }
 
   public function set($openid){
